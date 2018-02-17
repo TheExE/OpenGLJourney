@@ -6,8 +6,8 @@ public:
 	VertexBuffer(const void* pData, unsigned int size);
 	~VertexBuffer();
 
-	void bind() const;
-	void unBind() const;
+	void Bind() const;
+	void Unbind() const;
 
 private:
 	unsigned int m_rendererId;

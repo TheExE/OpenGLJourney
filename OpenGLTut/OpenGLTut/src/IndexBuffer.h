@@ -6,8 +6,8 @@ public:
 	IndexBuffer(const unsigned int* pIndexes, unsigned int count);
 	~IndexBuffer();
 
-	void bind() const;
-	void unBind() const ;
+	void Bind() const;
+	void Unbind() const ;
 
 	inline unsigned int getCount() const { return m_count; }
 
