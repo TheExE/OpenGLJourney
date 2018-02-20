@@ -8,6 +8,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "VertexBufferLayout.h"
 
 int main()
 {
@@ -67,9 +68,9 @@ int main()
 		
 		// Position index buffer
 		IndexBuffer indexBuffer(indexes, 6);
-
-		// Create shader
+		
 		Shader shader("res/shaders/Basic.shader");
+		Renderer renderer;
 
 		vertexArray.Unbind();
 		shader.Unbind();
@@ -83,15 +84,13 @@ int main()
 		while (!glfwWindowShouldClose(window))
 		{
 			/* Render here */
-			GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
+			
+			renderer.Clear();
+			
 			shader.Bind();
 			shader.SetUniform4f("u_color", r, 0.3f, 0.8f, 1.0f);
 
-			vertexArray.Bind();
-			indexBuffer.Bind();
-
-			GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+			renderer.Draw(vertexArray, indexBuffer);
 
 			r += increment;
 			if (r > 1)

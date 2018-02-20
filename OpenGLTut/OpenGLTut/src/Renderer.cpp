@@ -1,8 +1,7 @@
-#include "Renderer.h"
-
 #include <GL/glew.h>
 #include <iostream>
 
+#include "Renderer.h"
 
 void GLClearError()
 {
@@ -18,4 +17,18 @@ bool GLCheckError(const char* function, const char* file, int line)
 		return false;
 	}
 	return true;
+}
+
+void Renderer::Draw(const VertexArray& vertexArray,
+	const IndexBuffer& indexBuffer)
+{	
+	vertexArray.Bind();
+	indexBuffer.Bind();
+	GLCall(glDrawElements(GL_TRIANGLES, indexBuffer.getCount(),
+		GL_UNSIGNED_INT, nullptr));	
+}
+
+void Renderer::Clear() const
+{
+	GLCall(glClear(GL_COLOR_BUFFER_BIT));
 }
