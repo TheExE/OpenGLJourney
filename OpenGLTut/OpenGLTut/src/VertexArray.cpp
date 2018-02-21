@@ -26,7 +26,8 @@ void VertexArray::AddVertexBuffer(const VertexBuffer& buffer, const VertexBuffer
 		GLCall(glEnableVertexAttribArray(index));
 		
 		GLCall(glVertexAttribPointer(index, element.count, element.type,
-			element.bIsNormalized, layout.GetStride(), reinterpret_cast<const void*>(offset)));
+			element.bIsNormalized, layout.GetStride(), 
+			reinterpret_cast<const void*>(offset)));
 		
 		const unsigned int size = VertexBufferElement::GetSizeOfType(element.type) *
 			element.count;

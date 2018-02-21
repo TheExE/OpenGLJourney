@@ -9,6 +9,7 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "VertexBufferLayout.h"
+#include "Texture.h"
 
 int main()
 {
@@ -44,12 +45,11 @@ int main()
 		std::endl;
 
 	{
-		const unsigned int SIZE = 8;
-		float positions[SIZE] = {
-			-0.5f, -0.5f,
-			0.5f, -0.5f,
-			0.5f,  0.5f,
-			-0.5f, 0.5f,
+		float positions[] = {
+			-0.5f, -0.5f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 1.0f,
 		};
 
 		unsigned int indexes[] = {
@@ -61,19 +61,26 @@ int main()
 		VertexArray vertexArray;
 		VertexBufferLayout bufferLayout;
 		bufferLayout.Push<float>(2);
+		bufferLayout.Push<float>(2);
 
 		// Position buffer
-		const VertexBuffer vertexBuffer(positions, SIZE * sizeof(float));
+		const VertexBuffer vertexBuffer(positions,
+			4/*vertex count*/ * 4/*floats per vertex*/ * sizeof(float));
 		vertexArray.AddVertexBuffer(vertexBuffer, bufferLayout);
 		
 		// Position index buffer
 		IndexBuffer indexBuffer(indexes, 6);
-		
+
 		Shader shader("res/shaders/Basic.shader");
 		Renderer renderer;
 
+		Texture texture("res/textures/OpenGLTextureTest.png");
+		texture.Bind();
+		shader.Bind();
+		shader.SetUniform1i("u_texture", 0);
+
 		vertexArray.Unbind();
-		shader.Unbind();
+		//shader.Unbind();
 		vertexBuffer.Unbind();
 		indexBuffer.Unbind();
 
@@ -87,9 +94,8 @@ int main()
 			
 			renderer.Clear();
 			
-			shader.Bind();
-			shader.SetUniform4f("u_color", r, 0.3f, 0.8f, 1.0f);
-
+			//shader.Bind();
+			//shader.SetUniform4f("u_color", r, 0.3f, 0.8f, 1.0f);
 			renderer.Draw(vertexArray, indexBuffer);
 
 			r += increment;

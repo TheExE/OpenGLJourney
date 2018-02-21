@@ -33,7 +33,12 @@ void Shader::SetUniform4f(const std::string& name, float v0, float v1,
 	GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
 }
 
-unsigned int Shader::GetUniformLocation(const std::string& name)
+void Shader::SetUniform1i(const std::string& name, int value)
+{
+	GLCall(glUniform1i(GetUniformLocation(name), value));	
+}
+
+int Shader::GetUniformLocation(const std::string& name)
 {
 	/* location is int because
 	* in missing uniform scenario it will
@@ -46,7 +51,7 @@ unsigned int Shader::GetUniformLocation(const std::string& name)
 		if (location == -1)
 		{
 			std::cout << "Warning: Uniform " << name
-				<< " location does not exist !";
+				<< " location does not exist ! ";
 		}
 		else
 		{
