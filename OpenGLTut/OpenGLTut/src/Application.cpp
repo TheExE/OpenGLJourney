@@ -84,6 +84,9 @@ int main()
 		vertexBuffer.Unbind();
 		indexBuffer.Unbind();
 
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
 		float r = 0.0f;
 		float increment = 0.05f;
 
